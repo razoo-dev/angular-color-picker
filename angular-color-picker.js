@@ -164,6 +164,11 @@
 
             link: function ($scope, $element, $attributes, ngModel) {
                 $scope.hsv = { h: 0, s: 0, v: 0 };
+                var clientWidth = 200;    //Setting default width of ._variations to 200px
+                var colorBoxElem = $element.find('._variations')[0];
+                if (colorBoxElem && colorBoxElem.clientWidth){
+                  clientWidth = colorBoxElem.clientWidth  //Get the actual width from the DOM if present
+                }
 
                 if (ngModel) {
                     ngModel.$render = function () {
@@ -171,8 +176,8 @@
                             $scope.color = ngModel.$viewValue;
                             $scope.hsv = hexRgbToHsv($scope.color);
                             $scope.colorCursor = {
-                                x: $scope.hsv.s * 200,
-                                y: (1 - $scope.hsv.v) * 200
+                                x: $scope.hsv.s * clientWidth,
+                                y: (1 - $scope.hsv.v) * clientWidth
                             };
                         } else {
                             $scope.color = null;
@@ -181,7 +186,7 @@
                         }
 
                         $scope.hueBackgroundColor = hsvToHexRgb($scope.hsv.h, 1, 1);
-                        $scope.hueCursor = $scope.hsv.h * 200;
+                        $scope.hueCursor = $scope.hsv.h * clientWidth;
                     };
                 }
 
