@@ -160,6 +160,7 @@
             replace: true,
             require: '?ngModel',
             scope: {
+              callback: '&?'
             },
 
             link: function ($scope, $element, $attributes, ngModel) {
@@ -167,7 +168,7 @@
                 var clientWidth = 200;    //Setting default width of ._variations to 200px
                 var colorBoxElem = $element.find('._variations')[0];
                 if (colorBoxElem && colorBoxElem.clientWidth){
-                  clientWidth = colorBoxElem.clientWidth  //Get the actual width from the DOM if present
+                  clientWidth = colorBoxElem.clientWidth;  //Get the actual width from the DOM if present
                 }
 
                 if (ngModel) {
@@ -218,6 +219,9 @@
 
                         if (ngModel) {
                             ngModel.$setViewValue($scope.color);
+                            if (!!$attributes.callback){
+                              $scope.callback();
+                            }
                         }
                     }
                 }
